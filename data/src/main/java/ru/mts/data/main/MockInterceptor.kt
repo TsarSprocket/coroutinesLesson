@@ -5,12 +5,9 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.asResponseBody
-import okhttp3.ResponseBody.Companion.toResponseBody
 import okhttp3.mockwebserver.MockResponse
 import ru.mts.data.utils.ResourcesReader
-import java.io.File
-import java.io.FileNotFoundException
-import java.net.URL
+import kotlin.math.roundToInt
 
 class MockInterceptor : Interceptor {
 
@@ -40,6 +37,8 @@ class MockInterceptor : Interceptor {
 
 fun MockResponse.setBodyFromFile(filName: String): MockResponse {
     val text = ResourcesReader.readText(filName)
+        .replace("%RANDOM%", (Math.random() * 100).roundToInt().toString())
+        .replace("%ID%", (Math.random() * 5).roundToInt().toString())
     setBody(text)
     return this
 }

@@ -5,7 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.mts.data.news.repository.News
 
-@Entity(tableName = "news")
-data class NewsEntity(@PrimaryKey @ColumnInfo(name = "id") val id: Int)
+const val ILLEGAL_ID = -1
 
-fun NewsEntity.toDomain() = News(this.id)
+@Entity(tableName = "news")
+data class NewsEntity(
+    @PrimaryKey @ColumnInfo(name = "id") val id: Int,
+    @ColumnInfo(name = "text") val text: String,
+)
+
+fun NewsEntity.toDomain() = News(id, text)
